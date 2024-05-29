@@ -6,7 +6,7 @@ void drawBoard(char *spaces);
 void playerMove(char *spaces, char player);
 void computerMove(char *spaces, char computer);
 bool checkWinner(char *spaces, char player, char computer);
-// bool checkTie(char *spaces);
+bool checkTie(char *spaces);
 
 int main()
 {
@@ -24,6 +24,10 @@ int main()
             running = false;
             break;
         }
+        else if (checkTie(spaces)){
+            running = false;
+            break;
+        }
 
         computerMove(spaces, computer);   
         drawBoard(spaces);
@@ -31,8 +35,13 @@ int main()
             running = false;
             break;
         }
+        else if (checkTie(spaces)){
+            running = false;
+            break;
+        }
     }
 
+    std::cout << "Thanks for playing!\n";
     return 0;
 }
 
@@ -90,7 +99,7 @@ Check if there is a winner and return bool
 */
 bool checkWinner(char *spaces, char player, char computer){
     if ((spaces[0] != ' ') && (spaces[0] == spaces[1]) && (spaces[1] == spaces[2])){
-        spaces[0] == player ? std::cout << "YOU WIN!\n" : std::cout << "YOU LOSE\n";
+        spaces[0] == player ? std::cout << "YOU WIN!\n" : std::cout << "YOU LOSE!\n";
     }
     else if ((spaces[3] != ' ') && (spaces[3] == spaces[4]) && (spaces[4] == spaces[5])){
         spaces[3] == player ? std::cout << "YOU WIN!\n" : std::cout << "YOU LOSE\n";
@@ -120,6 +129,16 @@ bool checkWinner(char *spaces, char player, char computer){
     return true;
 }
 
-// bool checkTie(char *spaces){
-//     return 0;
-// }
+/*
+Check if there is a tie and no spaces avaliable to play
+*/
+bool checkTie(char *spaces){
+
+    for (int i = 0; i < 9; i++){
+        if(spaces[i] == ' '){
+            return false;
+        }
+    }
+    std::cout << "IT'S A TIE!";
+    return true;
+}
